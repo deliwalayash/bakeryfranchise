@@ -222,7 +222,7 @@
         budget: budget
       });
 
-      // Simulate backend endpoint submission (or connect to actual endpoint when provided)
+      // Redirect to Thank You page for conversion tracking
       setTimeout(function () {
         if (submitButton) {
           submitButton.disabled = false;
@@ -231,12 +231,9 @@
 
         leadForm.reset();
 
-        if (alertSuccess) {
-          alertSuccess.style.display = 'block';
-          alertSuccess.classList.add('show');
-          alertSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 750);
+        // Redirect to dedicated Thank You conversion page
+        window.location.href = 'thankyou.html';
+      }, 500);
     });
   }
 

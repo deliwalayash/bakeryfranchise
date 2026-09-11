@@ -22,14 +22,17 @@
     officeAddress: "C-1034, Opposite Bhootnath Market, A Block, Indira Nagar, Lucknow - 226016",
     operatingHours: "Mon - Sat: 10:00 AM - 7:00 PM IST",
 
-    // Google Ads & Analytics Tracking Placeholders
-    googleAdsId: "YOUR_GOOGLE_ADS_ID",
-    gtmId: "YOUR_GTM_CONTAINER_ID",
+    // Google Ads & Analytics Tracking Configuration
+    googleAdsId: "AW-18435726150",
+    gtmId: "GTM-P94VCCMQ",
     conversionLabels: {
       formSubmission: "YOUR_CONVERSION_LABEL_FORM",
       phoneCallClick: "YOUR_CONVERSION_LABEL_PHONE",
       whatsappClick: "YOUR_CONVERSION_LABEL_WHATSAPP"
-    }
+    },
+
+    // Google Sheets & Gmail Webhook URL (Paste your Google Apps Script Web App URL here)
+    leadWebhookUrl: "https://script.google.com/macros/s/AKfycbwQMKkPTRaWlLdGTVkD8uZsJFg5iizaj7F-sYciETx4B7-X4a1f2fVfyP5Jdy78xLThvw/exec"
   };
 
   // ==========================================================================
@@ -216,24 +219,65 @@
         submitButton.innerHTML = 'Submitting Enquiry...';
       }
 
-      // Fire conversion tracking immediately
+      // Fire conversion tracking
       trackConversion('formSubmission', {
         city: city,
         budget: budget
       });
 
-      // Redirect to Thank You page for conversion tracking
-      setTimeout(function () {
+      var webhookUrl = window.APP_CONFIG && window.APP_CONFIG.leadWebhookUrl;
+      var hasValidWebhook = webhookUrl && webhookUrl.indexOf('http') === 0 && webhookUrl.indexOf('YOUR_GOOGLE_APPS_SCRIPT') === -1;
+
+      function finalizeSubmission() {
         if (submitButton) {
           submitButton.disabled = false;
           submitButton.innerHTML = originalBtnText;
         }
-
         leadForm.reset();
-
-        // Redirect to dedicated Thank You conversion page
         window.location.href = 'thankyou.html';
-      }, 500);
+      }
+
+      if (hasValidWebhook) {
+        // Send data to Google Apps Script Web App
+        // Using 'text/plain;charset=utf-8' prevents CORS preflight blocking in browsers
+        var redirectDone = false;
+        var timeoutId = setTimeout(function () {
+          if (!redirectDone) {
+            redirectDone = true;
+            finalizeSubmission();
+          }
+        }, 3000); // 3-second safety fallback timeout
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(function () {
+            if (!redirectDone) {
+              redirectDone = true;
+              clearTimeout(timeoutId);
+              finalizeSubmission();
+            }
+          })
+          .catch(function (err) {
+            console.warn('[Lead Form] Webhook submission error:', err);
+            if (!redirectDone) {
+              redirectDone = true;
+              clearTimeout(timeoutId);
+              finalizeSubmission();
+            }
+          });
+      } else {
+        // Webhook URL not configured yet - simulate brief delay and redirect
+        console.info('[Lead Form] Lead data captured locally. Configure APP_CONFIG.leadWebhookUrl in script.js to save to Google Sheets & receive Gmail alerts.', formData);
+        setTimeout(function () {
+          finalizeSubmission();
+        }, 600);
+      }
     });
   }
 

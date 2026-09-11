@@ -1469,6 +1469,30 @@ textarea.form-control {
   text-align: center;
 }
 
+.footer-credits {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.footer-credits a {
+  color: #F48FB1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.footer-credits a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.footer-credit-sep {
+  color: rgba(255, 255, 255, 0.25);
+}
+
 @media (min-width: 768px) {
   .footer-bottom {
     flex-direction: row;

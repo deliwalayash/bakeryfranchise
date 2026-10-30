@@ -1,7 +1,7 @@
 /**
  * ============================================================================
- * BAKERY FRANCHISE INDIA - JAVASCRIPT & TRACKING INTEGRATION
- * Website: https://bakeryfranchiseindia.shop/
+ * MOGINIS CAKES - JAVASCRIPT & TRACKING INTEGRATION
+ * Website: https://moginiscakes.in/
  * ============================================================================
  */
 
@@ -13,12 +13,12 @@
   // ==========================================================================
   window.APP_CONFIG = {
     // Business Contact Details (Replace placeholders when available)
-    businessName: "Bakery Franchise India",
+    businessName: "Moginis Cakes",
     phoneNumberDisplay: "+91 95195 54714",
     phoneNumberTel: "+919519554714",
     whatsappNumber: "919519554714",
-    whatsappPreFilledMsg: "Hello, I am interested in a bakery franchise opportunity. I would like more information.",
-    emailAddress: "info@bakeryfranchiseindia.shop",
+    whatsappPreFilledMsg: "Hello, I am interested in a Moginis cake shop franchise opportunity. I would like more information.",
+    emailAddress: "info@moginiscakes.in",
     officeAddress: "C-1034, Opposite Bhootnath Market, A Block, Indira Nagar, Lucknow - 226016",
     operatingHours: "Mon - Sat: 10:00 AM - 7:00 PM IST",
 

@@ -53,6 +53,9 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css?v=2.3">
 
+  <!-- Preload Critical Hero Image for Instant Rendering -->
+  <link rel="preload" as="image" href="images/cake-shoop.webp" type="image/webp" fetchpriority="high">
+
   <!-- Schema.org Structured Data for Google Trust & Business Verification -->
   <script type="application/ld+json">
   {
@@ -140,7 +143,10 @@
           <!-- Hero Store Showcase Photo Card -->
           <div class="hero-photo-showcase">
             <div class="hero-photo-wrap" style="height: auto !important; min-height: unset !important; max-height: none !important;">
-              <img src="images/cake-shoop.png" alt="Actual Monginis Cake Shop Storefront & Setup" width="477" height="632" fetchpriority="high" style="width: 100% !important; height: auto !important; max-height: none !important; object-fit: contain !important; display: block !important;">
+              <picture>
+                <source srcset="images/cake-shoop.webp" type="image/webp">
+                <img src="images/cake-shoop.png" alt="Actual Monginis Cake Shop Storefront & Setup" width="477" height="632" fetchpriority="high" decoding="sync" style="width: 100% !important; height: auto !important; max-height: none !important; object-fit: contain !important; display: block !important;">
+              </picture>
               <span class="hero-photo-badge">
                 <span class="badge-dot" style="background-color: #22C55E;"></span> Live Store Setup
               </span>
@@ -172,7 +178,7 @@
                 <!-- Card 1: Store Interior Display -->
                 <div class="marquee-card">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-1-inside-Actual-Store.jpeg" alt="Actual Cake Shop Inside View & Refrigerated Display Setup" width="165" height="100" fetchpriority="high">
+                    <img src="images/store-1-inside-Actual-Store.jpeg" alt="Actual Cake Shop Inside View & Refrigerated Display Setup" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Interior Setup</span>
                   </div>
                   <div class="marquee-caption">
@@ -184,7 +190,7 @@
                 <!-- Card 2: Radha Ram Enterprise (Pune) -->
                 <div class="marquee-card">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-2-radha-ram-enterprise.jpeg" alt="Radha Ram Enterprise - Cake Shop Storefront in Nanded City Pune" width="165" height="100" loading="eager">
+                    <img src="images/store-2-radha-ram-enterprise.jpeg" alt="Radha Ram Enterprise - Cake Shop Storefront in Nanded City Pune" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Pune, MH</span>
                   </div>
                   <div class="marquee-caption">
@@ -196,7 +202,7 @@
                 <!-- Card 3: Soham Agency (Patna) -->
                 <div class="marquee-card">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-3-Soham Agency.jpeg" alt="Soham Agency - Cake Shop Storefront in Kurji, Patna" width="165" height="100" loading="eager">
+                    <img src="images/store-3-Soham Agency.jpeg" alt="Soham Agency - Cake Shop Storefront in Kurji, Patna" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Patna, BR</span>
                   </div>
                   <div class="marquee-caption">
@@ -208,7 +214,7 @@
                 <!-- Card 4: Raghuram Agency (Bandel Hooghly) -->
                 <div class="marquee-card">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-4-Raghuram-Agency.jpeg" alt="Raghuram Agency - Cake Shop Storefront in Bandel Hooghly" width="165" height="100" loading="eager">
+                    <img src="images/store-4-Raghuram-Agency.jpeg" alt="Raghuram Agency - Cake Shop Storefront in Bandel Hooghly" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Hooghly, WB</span>
                   </div>
                   <div class="marquee-caption">
@@ -220,7 +226,7 @@
                 <!-- Card 5: Shakti Cake Shop (Siwan) -->
                 <div class="marquee-card">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-5-Shakti.jpeg" alt="Shakti Cake Shop Storefront in Basantpur, Siwan" width="165" height="100" loading="eager">
+                    <img src="images/store-5-Shakti.jpeg" alt="Shakti Cake Shop Storefront in Basantpur, Siwan" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Siwan, BR</span>
                   </div>
                   <div class="marquee-caption">
@@ -232,7 +238,7 @@
                 <!-- Duplicate Set for Seamless Continuous Infinite Scrolling Loop -->
                 <div class="marquee-card" aria-hidden="true">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-1-inside-Actual-Store.jpeg" alt="Interior display" width="165" height="100" loading="eager">
+                    <img src="images/store-1-inside-Actual-Store.jpeg" alt="Interior display" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Interior Setup</span>
                   </div>
                   <div class="marquee-caption">
@@ -243,7 +249,7 @@
 
                 <div class="marquee-card" aria-hidden="true">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-2-radha-ram-enterprise.jpeg" alt="Pune storefront" width="165" height="100" loading="eager">
+                    <img src="images/store-2-radha-ram-enterprise.jpeg" alt="Pune storefront" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Pune, MH</span>
                   </div>
                   <div class="marquee-caption">
@@ -254,7 +260,7 @@
 
                 <div class="marquee-card" aria-hidden="true">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-3-Soham Agency.jpeg" alt="Patna storefront" width="165" height="100" loading="eager">
+                    <img src="images/store-3-Soham Agency.jpeg" alt="Patna storefront" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Patna, BR</span>
                   </div>
                   <div class="marquee-caption">
@@ -265,7 +271,7 @@
 
                 <div class="marquee-card" aria-hidden="true">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-4-Raghuram-Agency.jpeg" alt="Hooghly storefront" width="165" height="100" loading="eager">
+                    <img src="images/store-4-Raghuram-Agency.jpeg" alt="Hooghly storefront" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Hooghly, WB</span>
                   </div>
                   <div class="marquee-caption">
@@ -276,7 +282,7 @@
 
                 <div class="marquee-card" aria-hidden="true">
                   <div class="marquee-img-wrap">
-                    <img src="images/store-5-Shakti.jpeg" alt="Siwan storefront" width="165" height="100" loading="eager">
+                    <img src="images/store-5-Shakti.jpeg" alt="Siwan storefront" width="165" height="100" loading="lazy" decoding="async">
                     <span class="marquee-tag">Siwan, BR</span>
                   </div>
                   <div class="marquee-caption">

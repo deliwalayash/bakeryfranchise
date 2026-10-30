@@ -13,12 +13,12 @@
   // ==========================================================================
   window.APP_CONFIG = {
     // Business Contact Details (Replace placeholders when available)
-    businessName: "Moginis Cakes",
+    businessName: "Bakery Franchise Partner",
     phoneNumberDisplay: "+91 95195 54714",
     phoneNumberTel: "+919519554714",
     whatsappNumber: "919519554714",
-    whatsappPreFilledMsg: "Hello, I am interested in a Moginis cake shop franchise opportunity. I would like more information.",
-    emailAddress: "info@moginiscakes.in",
+    whatsappPreFilledMsg: "Hello Bakery Franchise Partner, I am interested in opening a Monginis cake shop franchise. Please provide investment and setup details.",
+    emailAddress: "info@bakeryfranchisepartner.in",
     officeAddress: "C-1034, Opposite Bhootnath Market, A Block, Indira Nagar, Lucknow - 226016",
     operatingHours: "Mon - Sat: 10:00 AM - 7:00 PM IST",
 

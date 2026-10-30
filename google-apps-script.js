@@ -23,7 +23,7 @@
 
 // CONFIGURATION: Enter your recipient email(s) here
 var RECIPIENT_EMAILS = [
-  "info@moginiscakes.in" // Change or add more emails: ["email1@gmail.com", "email2@gmail.com"]
+  "info@bakeryfranchisepartner.in" // Change or add more emails: ["email1@gmail.com", "email2@gmail.com"]
 ];
 
 var SHEET_NAME = "Leads"; // Name of the sheet tab inside Google Sheets
@@ -181,9 +181,9 @@ function sendEmailNotification(lead) {
 
   var htmlBody = ""
     + "<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0d0c1; border-radius: 8px; overflow: hidden; background-color: #ffffff;'>"
-    + "  <div style='background: linear-gradient(135deg, #2c1810 0%, #4a2c1d 100%); color: #ffffff; padding: 24px 20px; text-align: center;'>"
-    + "    <h1 style='margin: 0; font-size: 22px; font-weight: bold; color: #fdfaf6;'>🍰 Moginis Cakes</h1>"
-    + "    <p style='margin: 6px 0 0; font-size: 14px; color: #d4a373;'>New Franchise Lead Received</p>"
+    + "  <div style='background: linear-gradient(135deg, #4A154B 0%, #D81B60 100%); color: #ffffff; padding: 24px 20px; text-align: center;'>"
+    + "    <h1 style='margin: 0; font-size: 22px; font-weight: bold; color: #ffffff;'>🎂 Bakery Franchise Partner</h1>"
+    + "    <p style='margin: 6px 0 0; font-size: 14px; color: #fce4ec;'>New Monginis Cake Shop Franchise Lead Received</p>"
     + "  </div>"
     + "  <div style='padding: 24px 20px; color: #333333;'>"
     + "    <p style='font-size: 15px; margin-top: 0;'>A new prospective franchise partner just submitted an enquiry form:</p>"
@@ -196,12 +196,12 @@ function sendEmailNotification(lead) {
     + "      <tr><td style='padding: 10px 14px; font-weight: bold; border: 1px solid #ecd8c9;'>Received At</td><td style='padding: 10px 14px; border: 1px solid #ecd8c9; color: #666666;'>" + lead.date + "</td></tr>"
     + "    </table>"
     + "    <div style='text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px dashed #e0d0c1;'>"
-    + "      <a href='" + telLink + "' style='display: inline-block; background-color: #2c1810; color: #ffffff; padding: 12px 22px; margin: 4px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;'>📞 Call Candidate Now</a>"
+    + "      <a href='" + telLink + "' style='display: inline-block; background-color: #4A154B; color: #ffffff; padding: 12px 22px; margin: 4px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;'>📞 Call Candidate Now</a>"
     + "      <a href='" + waLink + "' style='display: inline-block; background-color: #25D366; color: #ffffff; padding: 12px 22px; margin: 4px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;'>💬 Chat on WhatsApp</a>"
     + "    </div>"
     + "  </div>"
     + "  <div style='background-color: #f8f3ee; padding: 12px 20px; font-size: 12px; color: #7a6e65; text-align: center; border-top: 1px solid #ecd8c9;'>"
-    + "    This is an automated notification from your website lead form at Moginis Cakes (moginiscakes.in)."
+    + "    This is an automated notification from your website lead form at Bakery Franchise Partner (bakeryfranchisepartner.in/monginis-cakes/)."
     + "  </div>"
     + "</div>";
 

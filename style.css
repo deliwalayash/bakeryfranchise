@@ -590,22 +590,22 @@ p:last-child {
 .hero-photo-wrap {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: auto;
   overflow: hidden;
-  background: #F1F5F9;
+  background: #F8FAFC;
 }
 
 @media (min-width: 768px) {
   .hero-photo-wrap {
-    height: 250px;
+    height: auto;
   }
 }
 
 .hero-photo-wrap img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
+  object-fit: contain;
 }
 
 .hero-photo-badge {

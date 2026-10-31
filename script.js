@@ -216,7 +216,7 @@
       var originalBtnText = submitButton ? submitButton.innerHTML : 'Submit Enquiry';
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.innerHTML = 'Submitting Enquiry...';
+        submitButton.innerHTML = 'Connecting to WhatsApp...';
       }
 
       // Fire conversion tracking
@@ -233,20 +233,58 @@
           submitButton.disabled = false;
           submitButton.innerHTML = originalBtnText;
         }
+
+        // Format budget label for WhatsApp
+        var budgetLabel = budget;
+        var budgetMap = {
+          '5_10_lakhs': '₹5 Lakhs - ₹10 Lakhs',
+          '10_15_lakhs': '₹10 Lakhs - ₹15 Lakhs',
+          '15_25_lakhs': '₹15 Lakhs - ₹25 Lakhs',
+          'above_25_lakhs': 'Above ₹25 Lakhs',
+          'to_be_discussed': 'To be discussed'
+        };
+        if (budgetMap[budget]) {
+          budgetLabel = budgetMap[budget];
+        }
+
+        // Build pre-filled WhatsApp message with all lead details
+        var waLines = [
+          "Hello Bakery Franchise Partner,",
+          "",
+          "I have submitted a franchise enquiry on your website with the following details:",
+          "• *Name:* " + fullName,
+          "• *Mobile:* +91 " + cleanPhone,
+          "• *City:* " + city,
+          "• *Preferred Location:* " + (preferredLocation || city),
+          "• *Investment Budget:* " + budgetLabel
+        ];
+
+        if (message) {
+          waLines.push("• *Requirement / Notes:* " + message);
+        }
+
+        waLines.push("");
+        waLines.push("Please share the Monginis franchise brochure and investment details.");
+
+        var waMessageText = waLines.join("\n");
+        var waNumber = (window.APP_CONFIG && window.APP_CONFIG.whatsappNumber) || '919519554714';
+        var waTargetUrl = 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(waMessageText);
+
         leadForm.reset();
-        window.location.href = 'thankyou.html';
+
+        // Redirect directly to WhatsApp with pre-filled details
+        window.location.href = waTargetUrl;
       }
 
       if (hasValidWebhook) {
         // Send data to Google Apps Script Web App
-        // Using 'text/plain;charset=utf-8' prevents CORS preflight blocking in browsers
         var redirectDone = false;
         var timeoutId = setTimeout(function () {
           if (!redirectDone) {
             redirectDone = true;
             finalizeSubmission();
           }
-        }, 3000); // 3-second safety fallback timeout
+        }, 1200); // 1.2s timeout to ensure prompt WhatsApp redirect
 
         fetch(webhookUrl, {
           method: 'POST',
@@ -272,11 +310,11 @@
             }
           });
       } else {
-        // Webhook URL not configured yet - simulate brief delay and redirect
-        console.info('[Lead Form] Lead data captured locally. Configure APP_CONFIG.leadWebhookUrl in script.js to save to Google Sheets & receive Gmail alerts.', formData);
+        // Webhook URL not configured - brief delay and redirect to WhatsApp
+        console.info('[Lead Form] Lead data captured locally. Redirecting to WhatsApp with details...', formData);
         setTimeout(function () {
           finalizeSubmission();
-        }, 600);
+        }, 300);
       }
     });
   }

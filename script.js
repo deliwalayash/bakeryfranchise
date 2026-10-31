@@ -1,7 +1,7 @@
 /**
  * ============================================================================
- * MOGINIS CAKES - JAVASCRIPT & TRACKING INTEGRATION
- * Website: https://moginiscakes.in/
+ * BAKERY FRANCHISE PARTNER - JAVASCRIPT & TRACKING INTEGRATION
+ * Website: https://bakeryfranchisepartner.in/
  * ============================================================================
  */
 
@@ -12,13 +12,12 @@
   // CLIENT & TRACKING CONFIGURATION (Easily replace values here)
   // ==========================================================================
   window.APP_CONFIG = {
-    // Business Contact Details (Replace placeholders when available)
+    // Business Contact Details
     businessName: "Bakery Franchise Partner",
-    phoneNumberDisplay: "+91 95195 54714",
-    phoneNumberTel: "+919519554714",
-    whatsappNumber: "919519554714",
-    whatsappPreFilledMsg: "Hello Bakery Franchise Partner, I am interested in opening a Monginis cake shop franchise. Please provide investment and setup details.",
-    emailAddress: "info@bakeryfranchisepartner.in",
+    phoneNumberDisplay: "+91 99354 94314",
+    phoneNumberTel: "+919935494314",
+    leadEmail: "leadmonginis@gmail.com",
+    emailAddress: "leadmonginis@gmail.com",
     officeAddress: "C-1034, Opposite Bhootnath Market, A Block, Indira Nagar, Lucknow - 226016",
     operatingHours: "Mon - Sat: 10:00 AM - 7:00 PM IST",
 
@@ -27,11 +26,11 @@
     gtmId: "GTM-P94VCCMQ",
     conversionLabels: {
       formSubmission: "YOUR_CONVERSION_LABEL_FORM",
-      phoneCallClick: "YOUR_CONVERSION_LABEL_PHONE",
-      whatsappClick: "YOUR_CONVERSION_LABEL_WHATSAPP"
+      phoneCallClick: "YOUR_CONVERSION_LABEL_PHONE"
     },
 
-    // Google Sheets & Gmail Webhook URL (Paste your Google Apps Script Web App URL here)
+    // Form Delivery Endpoints
+    emailEndpoint: "https://formsubmit.co/ajax/leadmonginis@gmail.com",
     leadWebhookUrl: "https://script.google.com/macros/s/AKfycbwQMKkPTRaWlLdGTVkD8uZsJFg5iizaj7F-sYciETx4B7-X4a1f2fVfyP5Jdy78xLThvw/exec"
   };
 
@@ -84,22 +83,7 @@
   // ==========================================================================
   function initDynamicContactLinks() {
     var config = window.APP_CONFIG;
-
-    // Build WhatsApp URL
-    var encodedMsg = encodeURIComponent(config.whatsappPreFilledMsg);
-    var waUrl = 'https://wa.me/' + config.whatsappNumber + '?text=' + encodedMsg;
     var telUrl = 'tel:' + config.phoneNumberTel;
-
-    // Update all WhatsApp buttons
-    var waElements = document.querySelectorAll('.js-whatsapp-btn');
-    waElements.forEach(function (el) {
-      el.setAttribute('href', waUrl);
-      el.setAttribute('target', '_blank');
-      el.setAttribute('rel', 'noopener noreferrer');
-      el.addEventListener('click', function () {
-        trackConversion('whatsappClick', { source: el.getAttribute('data-source') || 'button' });
-      });
-    });
 
     // Update all Phone / Call buttons
     var callElements = document.querySelectorAll('.js-call-btn');
@@ -199,15 +183,25 @@
         return;
       }
 
-      // Prepare Submission Payload
+      // Map budget label for clear email readability
+      var budgetMap = {
+        '5_10_lakhs': '₹5 Lakhs - ₹10 Lakhs',
+        '10_15_lakhs': '₹10 Lakhs - ₹15 Lakhs',
+        '15_25_lakhs': '₹15 Lakhs - ₹25 Lakhs',
+        'above_25_lakhs': 'Above ₹25 Lakhs',
+        'to_be_discussed': 'To be discussed'
+      };
+      var budgetLabel = budgetMap[budget] || budget;
+
+      // Prepare Submission Payload for Webhook & Email
       var formData = {
         fullName: fullName,
         mobileNumber: cleanPhone,
         city: city,
         preferredLocation: preferredLocation || city,
-        investmentBudget: budget,
+        investmentBudget: budgetLabel,
         message: message,
-        submittedAt: new Date().toISOString(),
+        submittedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         landingPageUrl: window.location.href,
         referrer: document.referrer || 'direct'
       };
@@ -216,106 +210,93 @@
       var originalBtnText = submitButton ? submitButton.innerHTML : 'Submit Enquiry';
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.innerHTML = 'Connecting to WhatsApp...';
+        submitButton.innerHTML = 'Submitting Enquiry...';
       }
 
-      // Fire conversion tracking
+      // Fire conversion tracking immediately
       trackConversion('formSubmission', {
         city: city,
         budget: budget
       });
 
-      var webhookUrl = window.APP_CONFIG && window.APP_CONFIG.leadWebhookUrl;
-      var hasValidWebhook = webhookUrl && webhookUrl.indexOf('http') === 0 && webhookUrl.indexOf('YOUR_GOOGLE_APPS_SCRIPT') === -1;
+      // Target Thank-You URL based on path
+      var thankYouUrl = (window.location.pathname.indexOf('/monginis-cakes/') !== -1)
+        ? '../thankyou.html'
+        : 'thankyou.html';
 
+      var redirectDone = false;
       function finalizeSubmission() {
+        if (redirectDone) return;
+        redirectDone = true;
+
         if (submitButton) {
           submitButton.disabled = false;
           submitButton.innerHTML = originalBtnText;
         }
 
-        // Format budget label for WhatsApp
-        var budgetLabel = budget;
-        var budgetMap = {
-          '5_10_lakhs': '₹5 Lakhs - ₹10 Lakhs',
-          '10_15_lakhs': '₹10 Lakhs - ₹15 Lakhs',
-          '15_25_lakhs': '₹15 Lakhs - ₹25 Lakhs',
-          'above_25_lakhs': 'Above ₹25 Lakhs',
-          'to_be_discussed': 'To be discussed'
-        };
-        if (budgetMap[budget]) {
-          budgetLabel = budgetMap[budget];
-        }
-
-        // Build pre-filled WhatsApp message with all lead details
-        var waLines = [
-          "Hello Bakery Franchise Partner,",
-          "",
-          "I have submitted a franchise enquiry on your website with the following details:",
-          "• *Name:* " + fullName,
-          "• *Mobile:* +91 " + cleanPhone,
-          "• *City:* " + city,
-          "• *Preferred Location:* " + (preferredLocation || city),
-          "• *Investment Budget:* " + budgetLabel
-        ];
-
-        if (message) {
-          waLines.push("• *Requirement / Notes:* " + message);
-        }
-
-        waLines.push("");
-        waLines.push("Please share the Monginis franchise brochure and investment details.");
-
-        var waMessageText = waLines.join("\n");
-        var waNumber = (window.APP_CONFIG && window.APP_CONFIG.whatsappNumber) || '919519554714';
-        var waTargetUrl = 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(waMessageText);
-
         leadForm.reset();
 
-        // Redirect directly to WhatsApp with pre-filled details
-        window.location.href = waTargetUrl;
+        // Redirect to Thank-You Page
+        window.location.href = thankYouUrl;
       }
 
-      if (hasValidWebhook) {
-        // Send data to Google Apps Script Web App
-        var redirectDone = false;
-        var timeoutId = setTimeout(function () {
-          if (!redirectDone) {
-            redirectDone = true;
-            finalizeSubmission();
-          }
-        }, 1200); // 1.2s timeout to ensure prompt WhatsApp redirect
+      // Fail-safe redirect after 2.5s if network is slow
+      var timeoutId = setTimeout(function () {
+        finalizeSubmission();
+      }, 2500);
 
-        fetch(webhookUrl, {
+      // 1. Dispatch to FormSubmit for direct delivery to leadmonginis@gmail.com
+      var emailPayload = {
+        "Applicant Name": fullName,
+        "Mobile Number": "+91 " + cleanPhone,
+        "City / Town": city,
+        "Preferred Area": preferredLocation || city,
+        "Investment Budget": budgetLabel,
+        "Shop Details / Notes": message || 'None provided',
+        "Submitted At": formData.submittedAt,
+        "Landing Page URL": window.location.href,
+        "_subject": "🎂 New Monginis Franchise Lead: " + fullName + " (" + city + ")",
+        "_template": "table",
+        "_captcha": "false"
+      };
+
+      var formSubmitPromise = fetch(window.APP_CONFIG.emailEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(emailPayload)
+      }).catch(function (err) {
+        console.warn('[Lead Form] Email dispatch warning:', err);
+      });
+
+      // 2. Dispatch in parallel to Google Apps Script Webhook (for Google Sheets logging)
+      var webhookUrl = window.APP_CONFIG && window.APP_CONFIG.leadWebhookUrl;
+      var webhookPromise = null;
+      if (webhookUrl && webhookUrl.indexOf('http') === 0 && webhookUrl.indexOf('YOUR_GOOGLE_APPS_SCRIPT') === -1) {
+        webhookPromise = fetch(webhookUrl, {
           method: 'POST',
           mode: 'no-cors',
           headers: {
             'Content-Type': 'text/plain;charset=utf-8'
           },
           body: JSON.stringify(formData)
-        })
-          .then(function () {
-            if (!redirectDone) {
-              redirectDone = true;
-              clearTimeout(timeoutId);
-              finalizeSubmission();
-            }
-          })
-          .catch(function (err) {
-            console.warn('[Lead Form] Webhook submission error:', err);
-            if (!redirectDone) {
-              redirectDone = true;
-              clearTimeout(timeoutId);
-              finalizeSubmission();
-            }
-          });
-      } else {
-        // Webhook URL not configured - brief delay and redirect to WhatsApp
-        console.info('[Lead Form] Lead data captured locally. Redirecting to WhatsApp with details...', formData);
-        setTimeout(function () {
-          finalizeSubmission();
-        }, 300);
+        }).catch(function (err) {
+          console.warn('[Lead Form] Webhook dispatch warning:', err);
+        });
       }
+
+      // When primary email dispatch returns, proceed to Thank You page
+      Promise.all([formSubmitPromise, webhookPromise])
+        .then(function () {
+          clearTimeout(timeoutId);
+          finalizeSubmission();
+        })
+        .catch(function () {
+          clearTimeout(timeoutId);
+          finalizeSubmission();
+        });
     });
   }
 
@@ -338,10 +319,13 @@
           }
         });
 
-        // Toggle clicked item
+        // Toggle active item
         if (!isCurrentlyActive) {
           faqItem.classList.add('active');
           btn.setAttribute('aria-expanded', 'true');
+        } else {
+          faqItem.classList.remove('active');
+          btn.setAttribute('aria-expanded', 'false');
         }
       });
     });
@@ -351,11 +335,10 @@
   // SMOOTH SCROLLING FOR IN-PAGE ANCHORS
   // ==========================================================================
   function initSmoothScrolling() {
-    var smoothLinks = document.querySelectorAll('a[href^="#"]');
-    smoothLinks.forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        var targetId = link.getAttribute('href');
-        if (targetId === '#' || targetId === '') return;
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var targetId = this.getAttribute('href');
+        if (targetId === '#' || targetId === '#!') return;
 
         var targetElement = document.querySelector(targetId);
         if (targetElement) {

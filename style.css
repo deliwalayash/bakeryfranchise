@@ -1716,7 +1716,8 @@ textarea.form-control {
 }
 
 .mobile-sticky-bar .sticky-btn {
-  flex: 1 1 50% !important;
+  flex: 1 1 100% !important;
+  width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;

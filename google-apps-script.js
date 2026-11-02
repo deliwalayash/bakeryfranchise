@@ -183,7 +183,7 @@ function sendEmailNotification(lead) {
     + "<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0d0c1; border-radius: 8px; overflow: hidden; background-color: #ffffff;'>"
     + "  <div style='background: linear-gradient(135deg, #4A154B 0%, #D81B60 100%); color: #ffffff; padding: 24px 20px; text-align: center;'>"
     + "    <h1 style='margin: 0; font-size: 22px; font-weight: bold; color: #ffffff;'>🎂 Bakery Franchise Partner</h1>"
-    + "    <p style='margin: 6px 0 0; font-size: 14px; color: #fce4ec;'>New Monginis Cake Shop Franchise Lead Received</p>"
+    + "    <p style='margin: 6px 0 0; font-size: 14px; color: #fce4ec;'>New Cake Shop Franchise Lead Received</p>"
     + "  </div>"
     + "  <div style='padding: 24px 20px; color: #333333;'>"
     + "    <p style='font-size: 15px; margin-top: 0;'>A new prospective franchise partner just submitted an enquiry form:</p>"
@@ -201,7 +201,7 @@ function sendEmailNotification(lead) {
     + "    </div>"
     + "  </div>"
     + "  <div style='background-color: #f8f3ee; padding: 12px 20px; font-size: 12px; color: #7a6e65; text-align: center; border-top: 1px solid #ecd8c9;'>"
-    + "    This is an automated notification from your website lead form at Bakery Franchise Partner (bakeryfranchisepartner.in/monginis-cakes/)."
+    + "    This is an automated notification from your website lead form at Bakery Franchise Partner (bakeryfranchisepartner.in/)."
     + "  </div>"
     + "</div>";
 

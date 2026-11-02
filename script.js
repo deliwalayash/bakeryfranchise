@@ -9,15 +9,14 @@
   'use strict';
 
   // ==========================================================================
-  // CLIENT & TRACKING CONFIGURATION (Easily replace values here)
+  // CLIENT & TRACKING CONFIGURATION
   // ==========================================================================
   window.APP_CONFIG = {
     // Business Contact Details
     businessName: "Bakery Franchise Partner",
     phoneNumberDisplay: "+91 99354 94314",
     phoneNumberTel: "+919935494314",
-    leadEmail: "leadmonginis@gmail.com",
-    emailAddress: "leadmonginis@gmail.com",
+    emailAddress: "info@bakeryfranchisepartner.in",
     officeAddress: "C-1034, Opposite Bhootnath Market, A Block, Indira Nagar, Lucknow - 226016",
     operatingHours: "Mon - Sat: 10:00 AM - 7:00 PM IST",
 
@@ -219,10 +218,8 @@
         budget: budget
       });
 
-      // Target Thank-You URL based on path
-      var thankYouUrl = (window.location.pathname.indexOf('/monginis-cakes/') !== -1)
-        ? '../thankyou.html'
-        : 'thankyou.html';
+      // Target Thank-You URL
+      var thankYouUrl = 'thankyou.html';
 
       var redirectDone = false;
       function finalizeSubmission() {
@@ -245,7 +242,7 @@
         finalizeSubmission();
       }, 2500);
 
-      // 1. Dispatch to FormSubmit for direct delivery to leadmonginis@gmail.com
+      // 1. Dispatch to FormSubmit for direct delivery to backend email
       var emailPayload = {
         "Applicant Name": fullName,
         "Mobile Number": "+91 " + cleanPhone,
@@ -255,7 +252,7 @@
         "Shop Details / Notes": message || 'None provided',
         "Submitted At": formData.submittedAt,
         "Landing Page URL": window.location.href,
-        "_subject": "🎂 New Monginis Franchise Lead: " + fullName + " (" + city + ")",
+        "_subject": "🎂 New Cake Shop Franchise Lead: " + fullName + " (" + city + ")",
         "_template": "table",
         "_captcha": "false"
       };
